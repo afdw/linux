@@ -84,7 +84,7 @@ vmlinux_link()
 		wl=
 		ld="${LD}"
 		ldflags="${KBUILD_LDFLAGS} ${LDFLAGS_vmlinux}"
-		ldlibs=
+		ldlibs="${LD_LIBS}"
 	fi
 
 	ldflags="${ldflags} ${wl}--script=${objtree}/${KBUILD_LDS}"

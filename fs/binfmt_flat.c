@@ -746,6 +746,7 @@ static int load_flat_file(struct linux_binprm *bprm,
 			if (rp_val == 0xffffffff)
 				break;
 			if (rp_val) {
+				if (flags & FLAT_FLAG_KTRACE) pr_debug("calc_reloc 1 %x", rp_val);
 				addr = calc_reloc(rp_val, libinfo);
 				if (addr == RELOC_FAILED) {
 					ret = -ENOEXEC;
@@ -782,6 +783,7 @@ static int load_flat_file(struct linux_binprm *bprm,
 				return -EFAULT;
 			relval = ntohl(tmp);
 			addr = flat_get_relocate_addr(relval);
+			if (flags & FLAT_FLAG_KTRACE) pr_debug("calc_reloc 2 %x", addr);
 			rp = (u32 __user *)calc_reloc(addr, libinfo);
 			if (rp == (u32 __user *)RELOC_FAILED) {
 				ret = -ENOEXEC;
@@ -805,6 +807,7 @@ static int load_flat_file(struct linux_binprm *bprm,
 					 */
 					addr = ntohl((__force __be32)addr);
 				}
+				if (flags & FLAT_FLAG_KTRACE) pr_debug("calc_reloc 3 %x", addr);
 				addr = calc_reloc(addr, libinfo);
 				if (addr == RELOC_FAILED) {
 					ret = -ENOEXEC;
